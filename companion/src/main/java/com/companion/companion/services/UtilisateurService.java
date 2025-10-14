@@ -3,33 +3,33 @@ package com.companion.companion.services;
 import com.companion.companion.entities.Utilisateur;
 import com.companion.companion.enums.Role;
 import com.companion.companion.repositories.UtilisateurRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UtilisateurService {
 
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
+    private final UtilisateurRepository utilisateurRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UtilisateurService(UtilisateurRepository utilisateurRepository, PasswordEncoder passwordEncoder) {
+        this.utilisateurRepository = utilisateurRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public Utilisateur inscrireUtilisateur(String prenom, String nom, String email, String password, Role role) {
-
-        // vérifie si l'email existe déjà
+        // Vérifier si l'email existe déjà
         if (utilisateurRepository.existsByEmail(email)) {
             throw new RuntimeException("Cet email est déjà utilisé");
         }
 
-        // hasher le mot de passe
+        // Hasher le mot de passe
         String passwordHash = passwordEncoder.encode(password);
 
-        // créer l'utilisateur
+        // Créer l'utilisateur
         Utilisateur utilisateur = new Utilisateur(prenom, nom, email, passwordHash, role);
 
-        // sauvegarder
+        // Sauvegarder
         return utilisateurRepository.save(utilisateur);
     }
 }
