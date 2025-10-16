@@ -26,6 +26,10 @@ public class Utilisateur {
     private LocalDateTime dateCreation;
     private Boolean actif = true;
 
+    @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    private ProfilEtudiant profilEtudiant;
+
+
     public Utilisateur() {
 
     }
@@ -39,9 +43,6 @@ public class Utilisateur {
         this.role = role;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
     public Long getId() {
         return id;
     }
@@ -106,5 +107,13 @@ public class Utilisateur {
     {
         return actif;
     }
+    public void setProfilEtudiant(ProfilEtudiant profilEtudiant) {
+        this.profilEtudiant = profilEtudiant;
+    }
+
+    public ProfilEtudiant getProfilEtudiant() {
+        return profilEtudiant;
+    }
+
 
 }
