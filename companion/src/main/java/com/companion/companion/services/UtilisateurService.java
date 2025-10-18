@@ -1,13 +1,8 @@
 package com.companion.companion.services;
 
-import com.companion.companion.entities.CentreInteret;
-import com.companion.companion.entities.Competence;
-import com.companion.companion.entities.ProfilEtudiant;
-import com.companion.companion.entities.Utilisateur;
-import com.companion.companion.enums.Role;
-import com.companion.companion.repositories.CentreInteretRepository;
-import com.companion.companion.repositories.CompetenceRepository;
-import com.companion.companion.repositories.UtilisateurRepository;
+import com.companion.companion.entities.*;
+import com.companion.companion.enums.*;
+import com.companion.companion.repositories.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -109,6 +104,31 @@ public class UtilisateurService {
         utilisateur.setProfilEtudiant(profil);
 
         /* Sauvegarde en cascade : utilisateur + profil étudiant */
+        return utilisateurRepository.save(utilisateur);
+    }
+    /**
+     * Inscription d'un établissement scolaire
+     */
+    public Utilisateur inscrireEcole(String prenom, String nom, String email, String password,
+                                     String nomEcole, TypeEtablissement typeEtablissement,
+                                     String localisation, String siteWeb, String emailContact,
+                                     String telephone, String description) {
+
+        if (utilisateurRepository.existsByEmail(email)) {
+            throw new RuntimeException("Cet email est déjà utilisé");
+        }
+
+        String passwordHash = passwordEncoder.encode(password);
+        Utilisateur utilisateur = new Utilisateur(prenom, nom, email, passwordHash, Role.ECOLE);
+
+        // Créer le profil école (non vérifié par défaut)
+        ProfilEcole profil = new ProfilEcole(nomEcole, typeEtablissement, localisation, description, utilisateur);
+        profil.setSiteWeb(siteWeb);
+        profil.setEmailContact(emailContact);
+        profil.setTelephone(telephone);
+
+        utilisateur.setProfilEcole(profil); // À ajouter dans Utilisateur.java
+
         return utilisateurRepository.save(utilisateur);
     }
 }

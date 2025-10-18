@@ -1,13 +1,27 @@
 package com.companion.companion.dto;
 import com.companion.companion.enums.Role;
-
+import jakarta.validation.constraints.*;
 import java.util.List;
 
 public class InscriptionEtudiantRequest extends InscriptionRequest {
+    @NotBlank(message = "Le niveau d'étude est obligatoire")
+    @Size(max = 100, message = "Le niveau d'étude ne peut pas dépasser 100 caractères")
     private String niveauEtude;
+
+    @NotBlank(message = "Le domaine d'étude est obligatoire")
+    @Size(max = 100, message = "Le domaine d'étude ne peut pas dépasser 100 caractères")
     private String domaineEtude;
+
+    @NotBlank(message = "La localisation est obligatoire")
+    @Size(max = 100, message = "La localisation ne peut pas dépasser 100 caractères")
     private String localisation;
+
+    @NotNull(message = "La liste des compétences est obligatoire")
+    @Size(min = 1, message = "Au moins une compétence doit être sélectionnée")
     private List<Long> competenceIds;
+
+    @NotNull(message = "La liste des centres d'intérêt est obligatoire")
+    @Size(min = 1, message = "Au moins un centre d'intérêt doit être sélectionné")
     private List<Long> centreInteretIds;
 
     //----------------------------  Constructeurs  ----------------------------

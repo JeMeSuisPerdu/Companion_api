@@ -1,5 +1,6 @@
 package com.companion.companion.controllers;
 
+import com.companion.companion.dto.InscriptionEcoleRequest;
 import com.companion.companion.dto.InscriptionEtudiantRequest;
 import com.companion.companion.dto.InscriptionRequest;
 import com.companion.companion.entities.Utilisateur;
@@ -56,4 +57,27 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Erreur: " + e.getMessage());
         }
     }
+
+    @PostMapping("/inscription/ecole")
+    public ResponseEntity<?> inscrireEcole(@RequestBody InscriptionEcoleRequest request) {
+        try {
+            Utilisateur utilisateur = utilisateurService.inscrireEcole(
+                    request.getPrenom(),
+                    request.getNom(),
+                    request.getEmail(),
+                    request.getPassword(),
+                    request.getNomEcole(),
+                    request.getTypeEtablissement(),
+                    request.getLocalisation(),
+                    request.getSiteWeb(),
+                    request.getEmailContact(),
+                    request.getTelephone(),
+                    request.getDescription()
+            );
+            return ResponseEntity.ok(utilisateur);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("Erreur: " + e.getMessage());
+        }
+    }
+
 }
