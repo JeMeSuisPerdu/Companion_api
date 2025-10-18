@@ -30,7 +30,8 @@ public class Utilisateur {
     private ProfilEtudiant profilEtudiant;
     @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.ALL)
     private ProfilEcole profilEcole;
-
+    @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    private ProfilEntreprise profilEntreprise;
     public Utilisateur() {
 
     }
@@ -119,10 +120,14 @@ public class Utilisateur {
     public void setProfilEcole(ProfilEcole profilEcole) {
         this.profilEcole = profilEcole;
     }
-
     public ProfilEcole getProfilEcole() {
         return profilEcole;
     }
 
-
+    public ProfilEntreprise getProfilEntreprise() {
+        return profilEntreprise;
+    }
+    public void setProfilEntreprise(ProfilEntreprise profilEntreprise) {
+        this.profilEntreprise = profilEntreprise;
+    }
 }

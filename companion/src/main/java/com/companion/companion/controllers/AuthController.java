@@ -1,8 +1,7 @@
 package com.companion.companion.controllers;
 
-import com.companion.companion.dto.InscriptionEcoleRequest;
-import com.companion.companion.dto.InscriptionEtudiantRequest;
-import com.companion.companion.dto.InscriptionRequest;
+
+import com.companion.companion.dto.*;
 import com.companion.companion.entities.Utilisateur;
 import com.companion.companion.services.UtilisateurService;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +72,26 @@ public class AuthController {
                     request.getEmailContact(),
                     request.getTelephone(),
                     request.getDescription()
+            );
+            return ResponseEntity.ok(utilisateur);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("Erreur: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/inscription/entreprise")
+    public ResponseEntity<?> inscrireEntreprise(@RequestBody InscriptionEntrepriseRequest request) {
+        try {
+            Utilisateur utilisateur = utilisateurService.inscrireEntreprise(
+                    request.getPrenom(),
+                    request.getNom(),
+                    request.getEmail(),
+                    request.getPassword(),
+                    request.getNomEntreprise(),
+                    request.getSecteurActivite(),
+                    request.getLocalisation(),
+                    request.getDescription(),
+                    request.getTaille()
             );
             return ResponseEntity.ok(utilisateur);
         } catch (RuntimeException e) {

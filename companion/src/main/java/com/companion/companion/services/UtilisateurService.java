@@ -131,4 +131,27 @@ public class UtilisateurService {
 
         return utilisateurRepository.save(utilisateur);
     }
+    /**
+     * Inscription complète d'une entreprise partenaire
+     * Crée l'utilisateur + profil entreprise avec système de vérification
+     */
+    public Utilisateur inscrireEntreprise(String prenom, String nom, String email, String password,
+                                          String nomEntreprise, String secteurActivite, String localisation,
+                                          String description, Integer taille) {
+
+        if (utilisateurRepository.existsByEmail(email)) {
+            throw new RuntimeException("Cet email est déjà utilisé");
+        }
+
+        String passwordHash = passwordEncoder.encode(password);
+        Utilisateur utilisateur = new Utilisateur(prenom, nom, email, passwordHash, Role.ENTREPRISE);
+
+        // Créer le profil entreprise (non vérifié par défaut)
+        ProfilEntreprise profil = new ProfilEntreprise(nomEntreprise, secteurActivite, localisation,
+                description, taille, utilisateur);
+
+        utilisateur.setProfilEntreprise(profil); // À ajouter dans Utilisateur.java
+
+        return utilisateurRepository.save(utilisateur);
+    }
 }
