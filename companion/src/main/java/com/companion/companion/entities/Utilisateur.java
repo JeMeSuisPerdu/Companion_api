@@ -2,6 +2,7 @@ package com.companion.companion.entities;
 
 import com.companion.companion.enums.Role;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 
@@ -27,14 +28,16 @@ public class Utilisateur {
     private Boolean actif = true;
 
     @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    @JsonIgnore
     private ProfilEtudiant profilEtudiant;
     @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    @JsonIgnore
     private ProfilEcole profilEcole;
     @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    @JsonIgnore
     private ProfilEntreprise profilEntreprise;
-    public Utilisateur() {
 
-    }
+    public Utilisateur() { }
     // Constructeur avec paramètres
     public Utilisateur(String prenom, String nom, String email, String password, Role role) {
         this.prenom = prenom;

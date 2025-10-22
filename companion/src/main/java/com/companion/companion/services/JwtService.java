@@ -1,5 +1,6 @@
 package com.companion.companion.services;
 
+import com.companion.companion.entities.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

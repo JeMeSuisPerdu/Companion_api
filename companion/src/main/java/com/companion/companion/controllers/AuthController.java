@@ -3,6 +3,7 @@ package com.companion.companion.controllers;
 
 import com.companion.companion.dto.*;
 import com.companion.companion.entities.Utilisateur;
+import com.companion.companion.services.AuthService;
 import com.companion.companion.services.UtilisateurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UtilisateurService utilisateurService;
+    private final AuthService authService;
 
-    public AuthController(UtilisateurService utilisateurService) {
+    public AuthController(UtilisateurService utilisateurService,AuthService authService) {
         this.utilisateurService = utilisateurService;
+        this.authService = authService;
     }
 
     @PostMapping("/inscription")
@@ -99,4 +102,13 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/connexion")
+    public ResponseEntity<?> connexion(@RequestBody LoginRequest request) {
+        try {
+            LoginResponse response = authService.authenticate(request);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("Erreur: " + e.getMessage());
+        }
+    }
 }
