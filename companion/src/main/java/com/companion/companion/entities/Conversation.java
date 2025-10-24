@@ -55,4 +55,33 @@ public class Conversation {
     public void setParticipants(List<Participant> participants) { this.participants = participants; }
     /* ----------------------------  METHODES METIER A AJOUTER  ---------------------------- */
 
+    /**
+     * Ajoute un message à la conversation
+     */
+    public void ajouterMessage(Message message) {
+        this.messages.add(message);
+        message.setConversation(this);
+    }
+
+    /**
+     * Ajoute un participant à la conversation
+     */
+    public void ajouterParticipant(Participant participant) {
+        this.participants.add(participant);
+        participant.setConversation(this);
+    }
+
+    /**
+     * Vérifie si la conversation est un groupe
+     */
+    public boolean estGroupe() {
+        return type == TypeConversation.GROUPE;
+    }
+
+    /**
+     * Vérifie si la conversation est privée
+     */
+    public boolean estPrivee() {
+        return type == TypeConversation.PRIVEE;
+    }
 }
