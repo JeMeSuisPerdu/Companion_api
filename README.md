@@ -7,6 +7,7 @@ Le projet repose sur **Spring Boot** pour la logique serveur, en interaction ave
 Ce dépôt est actuellement en phase de mise en place et d’évolution continue.  
 Le contenu du README sera mis à jour régulièrement pour documenter les avancées, l’architecture et les endpoints de l’API.
 
+Logique d'authentification en cours...
 ---
 Développé par Anis LAFRAD - alias JeMeSuisPerdu
 © 2025 — Companion
